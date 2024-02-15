@@ -33,4 +33,4 @@ RUN pip install --no-cache-dir -U pip
 RUN pip install --no-cache-dir -r /requirements.txt
 RUN cd hello_app
 RUN FLASK_APP=webapp
-RUN flask rund
+RUN flask run
