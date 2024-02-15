@@ -1,5 +1,7 @@
 # Pull a pre-built alpine docker image with nginx and python3 installed
-FROM tiangolo/uwsgi-nginx:python3.8-alpine-2020-12-19
+ARG PYTHON_VERSION=3.12
+
+FROM python:${PYTHON_VERSION}
 
 # Set the port on which the app runs; make both values the same.
 #
@@ -9,9 +11,6 @@ FROM tiangolo/uwsgi-nginx:python3.8-alpine-2020-12-19
 # You can also create a setting through the App Service Extension in VS Code.
 ENV LISTEN_PORT=5000
 EXPOSE 5000
-
-# Indicate where uwsgi.ini lives
-ENV UWSGI_INI uwsgi.ini
 
 # Tell nginx where static files live. Typically, developers place static files for
 # multiple apps in a shared folder, but for the purposes here we can use the one
@@ -32,3 +31,6 @@ COPY . /hello_app
 COPY requirements.txt /
 RUN pip install --no-cache-dir -U pip
 RUN pip install --no-cache-dir -r /requirements.txt
+RUN cd hello_app
+RUN FLASK_APP=webapp
+RUN flask rund
